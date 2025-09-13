@@ -1,0 +1,109 @@
+#plus4{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    ul{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        padding: 0.5em;
+        gap: 0.5em;
+
+        > li{
+            width: 100%;
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: auto 4em 1fr;
+            grid-template-rows: auto 1fr;
+            grid-template-areas: 
+            "rank avatar tags"
+            "rank avatar name"
+            "rank avatar status";
+            align-items: center;
+            column-gap: 0.8em;
+            padding: 0.5em;
+            border-radius: var(--r);
+
+            > ol{
+                list-style-type: none;
+                display: flex;
+                align-items: center;
+                gap: 0.4em;
+
+                > li{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.1em;
+
+                    p, i{
+                        color: var(--shade);
+                        font-size: 0.8em;
+                    }
+                }
+            }
+
+            .rank{
+                grid-area: rank;
+            }
+            .avatar{
+                grid-area: avatar;
+                border-radius: var(--r);
+                transition: all 100ms;
+                opacity: 0.8;
+            }
+            .tags{
+                grid-area: tags;
+                margin-bottom: 0.2em;
+
+                li{
+                    background: var(--mg);
+                    padding: 0.1em 0.5em;
+                    border-radius: var(--r);
+
+                    p, i{
+                        font-size: 0.7em;
+                    }
+
+                    transition: all 100ms;
+                }
+            }
+            .name{
+                grid-area: name;
+                font-size: 1em;
+
+                p{
+                    font-weight: normal;
+                    font-size: 0.7em;
+                    color: var(--shade);
+                }
+            }
+            .status{
+                grid-area: status;
+                height: 100%;
+            }
+
+            transition: all 100ms;
+        }
+        @media only screen and (min-width : 768px) {
+            > li:hover{
+                padding-inline: 1em;
+                background: var(--mg);
+
+                .avatar{
+                    background: var(--fg);
+                    opacity: 1;
+                }
+                .tags{
+                    li{
+                        background: var(--fg);
+                    }
+                }
+            }
+        }
+        > li:active{
+            scale: 0.95;
+        }
+    }
+}

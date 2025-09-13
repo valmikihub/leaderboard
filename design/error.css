@@ -1,0 +1,48 @@
+body{
+    display: flex;
+    flex-direction: column;
+}
+main{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+img{
+    width: 80%;
+    max-width: 600px;
+    aspect-ratio: 16 / 9;
+    background: var(--mg);
+    border-radius: var(--r);
+    margin-bottom: 2em;
+}
+p{
+    font-size: 0.9em;
+    color: var(--shade);
+}
+a{
+    text-decoration: none;
+    font-size: 0.9em;
+    cursor: pointer;
+    margin-inline: auto;
+    margin-bottom: 4em;
+    width: fit-content;
+    padding: 0.5em 1em;
+    border: none; outline: none;
+    border-radius: var(--r);
+    background: var(--accent);
+    transition: all 100ms;
+}
+@media only screen and (min-width : 768px) {
+    a:hover{
+        scale: 1.1;
+        rotate: -1deg;
+        background: var(--primary);
+    }
+}
+a:active{
+    rotate: 2deg;
+    scale: 0.8;
+}

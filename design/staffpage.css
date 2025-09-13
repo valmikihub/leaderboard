@@ -1,0 +1,353 @@
+:root{
+    --star: #bcdf0e;
+    --saccent: #a3bd21;
+}
+@keyframes fadein {
+    from{
+        opacity: 0;
+        translate: 0 50vh;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.fullscreen::backdrop{
+    opacity: 0;
+    background: var(--bg);
+    transition: all 100ms allow-discrete;
+    animation: fadein 100ms linear;
+}
+.fullscreen[open]::backdrop{
+    opacity: 1;
+}
+.fullscreen{
+    opacity: 0;
+    display: none;
+    outline: none; 
+    border: none;
+    margin: auto;
+    width: 100%; height: 100%;
+    background: var(--bg);
+
+    flex-direction: column;
+
+    transition: all 100ms allow-discrete;
+    animation: fadein 100ms linear;
+
+    .primary.text{
+        padding-inline: 1em;
+        width: 100%;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        color: var(--primary);
+        width: fit-content;
+        font-size: 1em;
+        transition: all 100ms;
+        border: none; outline: none;
+        margin-bottom: 4em;
+    }
+    .primary.text:focus{
+        rotate: -1deg;
+        scale: 1.1;
+        color: var(--accent);
+    }
+    @media only screen and (min-width : 768px) {
+        .primary.text:hover{
+            rotate: -1deg;
+            scale: 1.1;
+            color: var(--accent);
+        }
+    }
+    .primary.text:active{
+        rotate: 0deg;
+        scale: 0.9;
+    }
+}
+.fullscreen[open]{
+    opacity: 1;
+    display: flex;
+    gap: 0.1em;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .avatar{
+        user-select: none;
+        width: 6em;
+        -webkit-user-drag: none;
+    }
+    .name{
+        margin-top: 0.2em;
+        font-size: 1.5em;
+    }
+
+    .status{
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+        gap: 0.7em;
+        cursor: default;
+        user-select: none;
+
+        > li{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.1em;
+
+            p, i{
+                color: var(--shade);
+                font-size: 0.8em;
+            }
+        }
+        li:not(:first-of-type){
+            gap: 0.2em;
+        }
+    }
+    > p{
+        cursor: default;
+        color: var(--shade);
+        font-size: 0.8em;
+    }
+    button.primary{
+        user-select: none;
+        cursor: pointer;
+        padding: 0.5em 1em;
+        border-radius: var(--r);
+        border: none; outline: none;
+        margin-block: 1em 2em;
+        background: var(--accent);
+        font-size: 1em;
+        transition: all 100ms;
+    }
+    @media only screen and (min-width : 768px) {
+        button.primary:hover{
+            background: var(--primary);
+            rotate: -1deg;
+            scale: 1.1;
+        }
+    }
+    button.primary:active{
+        background: var(--primary);
+        rotate: 0;
+        scale: 0.9;
+    }
+}
+
+.rater{
+    display: flex;
+    list-style-type: none;
+    gap: 0.1em;
+    margin-top: 1em;
+}
+
+.rater > li{
+    label{
+        cursor: pointer;
+        padding: 0.2em;
+
+        i{
+            color: var(--shade);
+            user-select: none;
+            font-size: 1.5em;
+        }
+        input{
+            display: none;
+        }
+
+        * {
+            transition: all 100ms;
+        }
+    }
+    @media only screen and (min-width : 768px) {
+        label:hover > i{
+            rotate: -5deg;
+            scale: 1.2;
+        }
+    }
+    label:active > i{
+        scale: 0.8;
+    }
+    label:has(input:checked) > i{
+        color: var(--star);
+    }
+}
+
+label.field{
+    margin-block: 0.5em;
+    position: relative;
+    border-radius: var(--r);
+    border: 2px solid var(--mg);
+    background: transparent;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+
+    p{
+        font-size: 0.8em;
+        user-select: none;
+        cursor: text;
+        color: var(--shade);
+        position: absolute;
+        top: 0.8em; left: 0.75em;
+        transition: all 300ms;
+        background: var(--bg);
+        padding-inline: 0.25em;
+        border-radius: 50%;
+    }
+    input, textarea{
+        font-size: 0.8em;
+        border-radius: var(--r);
+        padding: 1em;
+        background-color: transparent;
+        border: none;
+        resize: vertical;
+    }
+    textarea{
+        min-height: 3.5em;
+        max-height: 18em;
+    }
+    :is(input, textarea):focus{
+        outline: none;
+    }
+
+    transition: all 300ms;
+}
+label.field:has(:is(input, textarea):is(:focus, :user-valid)) > p{
+    top: -0.8em;
+}
+@media only screen and (min-width : 768px) {
+    label.field:has(:is(input, textarea):is(:hover)){
+        border-color: var(--fg);
+    }
+}
+label.field:has(:is(input, textarea):is(:focus)){
+    border-color: var(--fg);
+}
+
+.comments{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    .list{
+        display: flex;
+        flex-direction: column;
+
+        li{
+            display: grid;
+            grid-template-columns: 3em 1fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas: 
+            "avatar name"
+            "avatar comment"
+            "actions actions";
+            column-gap: 0.4em;
+
+            .avatar{
+                grid-area: avatar;
+                width: 3em;
+                border: none;
+            }
+            .name{
+                font-size: 0.9em;
+                grid-area: name;
+                font-weight: normal;
+            }
+            .text{
+                grid-area: comment;
+                font-size: 0.7em;
+                color: var(--shade);
+            }
+            .actions{
+                grid-area: actions;
+                list-style-type: none;
+
+                display: flex;
+                padding: 0.5em;
+
+                label{
+                    user-select: none;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.3em;
+                    padding: 0.5em 1em;
+                    border-radius: var(--r);
+
+                    input{
+                        display: none;
+                    }
+
+                    p, i{
+                        color: var(--shade);
+                        font-size: 0.8em;
+                        transition: all 100ms;
+                    }
+                    i{
+                        font-size: 0.9em;
+                    }
+
+                    transition: all 100ms;
+                }
+                label:last-of-type > i{
+                    font-size: 1.1em;
+                    transition: all 100ms;
+                }
+                label:has(input:checked){
+                    p, i{
+                        color: var(--primary);
+                    }
+                }
+                label:last-of-type:has(input:checked){
+                    p, i{
+                        color: var(--error);
+                    }
+                }
+                @media only screen and (min-width : 768px) {
+                    label:hover{
+                        background: var(--mg);
+                    }
+                    label:last-of-type:hover{
+                        p, i{
+                            color: var(--error);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width : 768px) {
+    .fullscreen[open]{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1em 1fr;
+        grid-template-areas: 
+        "exit exit"
+        "profile comments";
+        #exit-staff-page{
+            grid-area: exit;
+        }
+        .container{
+            grid-area: profile;
+            width: auto;
+            border-right: 2px solid var(--fg);
+            padding-inline: 1em;
+        }
+        .comments{
+            padding-inline: 1em;
+            overflow-y: auto;
+            grid-area: comments;
+            height: 100%;
+        }
+    }
+}

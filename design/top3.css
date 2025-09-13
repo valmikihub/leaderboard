@@ -1,0 +1,126 @@
+#top3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    ol{
+        padding: 1em;
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+        display: grid;
+        grid-template-columns: 0.9fr 1fr 0.8fr;
+        grid-template-areas: 'sec fir thi';
+        align-items: center;
+        justify-content: center;
+        gap: 1em;
+
+        li{
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1em;
+            padding-block: 2em;
+            border-radius: 10px;
+
+            .rank{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.1em;
+
+                font-family: 'Times New Roman', Times, serif;
+
+                i{
+                    font-size: 1em;
+                }
+            }
+            .avatar{
+                margin-block: 0.5em;
+            }
+            .name{
+                text-align: center;
+            }
+            .pattern{
+                opacity: 0.8;
+            }
+            .rating{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.1em;
+
+                i{
+                    color: var(--shade);
+                    font-size: 0.8em;
+                }
+            }
+
+            transition: all 100ms;
+        }
+
+        li:first-of-type{
+            grid-area: fir;
+            background: linear-gradient(to top, #483604, transparent);
+            border-bottom: 8px solid #382a05;
+            rotate: 2deg;
+            
+            .rank{
+                font-size: 2em;
+            }
+        }
+
+        li:nth-child(2){
+            grid-area: sec;
+            background: linear-gradient(to top, #79919e14, transparent);
+            border-bottom: 8px solid #111313;
+
+            .rank{
+                font-size: 1.7em;
+            }
+            .avatar{
+                width: 3.5em;
+            }
+            .name{
+                font-size: 0.9em;
+            }
+            .info{
+                font-size: 0.7em;
+            }
+        }
+
+        li:nth-child(3){
+            grid-area: thi;
+            background: linear-gradient(to top, #6d060619, transparent);
+            border-bottom: 8px solid #120101;
+            rotate: -1deg;
+
+            .rank{
+                font-size: 1.5em;
+            }
+            .avatar{
+                width: 3em;
+            }
+            .name{
+                font-size: 0.8em;
+            }
+            .info{
+                font-size: 0.6em;
+            }
+        }
+
+        @media only screen and (min-width : 768px) {
+            li:hover{
+                scale: 1.05;
+                rotate: -2deg;
+            }
+        }
+
+        li:active{
+            scale: 0.9;
+        }
+    }
+}
