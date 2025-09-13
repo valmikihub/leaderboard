@@ -25,7 +25,7 @@ function closeStaffPage(){
 function openStaffPage(staff){
     staffPage.showModal()
     staffPageContent.innerHTML = `
-        <img class="avatar" src="${staff.avatar || "/assets/images/none.png"}" alt="Avatar">
+        <img class="avatar" src="${staff.avatar || "./assets/images/none.png"}" alt="Avatar">
         <h1 class="name">${staff.name.legal}</h1>
         <ul class="status">
             <li>
@@ -175,7 +175,7 @@ function updateTopThree() {
             const starIcon = ratingElement.querySelector(".material-icons-round");
             ratingText.textContent = sortedStaffs[i].rating;
             
-            avatarElement.src = sortedStaffs[i].avatar || "/assets/images/none.png";
+            avatarElement.src = sortedStaffs[i].avatar || "./assets/images/none.png";
 
             item.addEventListener('click', () => {
                 openStaffPage(sortedStaffs[i]);
@@ -199,7 +199,7 @@ function updatePlusFourList(staffArray) {
         const ProfileElement = document.createElement("li");
         ProfileElement.innerHTML = `
         <b class="rank">#${actualRank}</b>
-        <img src="${staff.avatar || "/assets/images/none.png"}" alt="Avatar" class="avatar">
+        <img src="${staff.avatar || "./assets/images/none.png"}" alt="Avatar" class="avatar">
         <ol class="tags">
             <li>
                 <p>${GetProfessionFromID(staff.profession[0])}</p>
@@ -271,4 +271,5 @@ initializeStaffs();
 
 exitStaffPageBtn.addEventListener('click', () => {
     closeStaffPage();
+
 });
