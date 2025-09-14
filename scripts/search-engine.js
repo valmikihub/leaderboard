@@ -271,5 +271,8 @@ initializeStaffs();
 
 exitStaffPageBtn.addEventListener('click', () => {
     closeStaffPage();
-
 });
+
+setTimeout(() => {
+    document.getElementById("alertbox").style.opacity = 0
+}, 5000);
