@@ -16,96 +16,6 @@ const staffPageContent = document.getElementById("staff-page-content");
 let sortedStaffs = [];
 let isSearching = false;
 
-/* -----------------> OPEN / STAFF PAGE <----------------- */
-
-function closeStaffPage(){
-    staffPage.close();
-}
-
-function openStaffPage(staff){
-    staffPage.showModal()
-    staffPageContent.innerHTML = `
-        <img class="avatar" src="${staff.avatar || "./assets/images/none.png"}" alt="Avatar">
-        <h1 class="name">${staff.name.legal}</h1>
-        <ul class="status">
-            <li>
-                <p> ${staff.rating} </p>
-                <i class="material-icons-round">star</i>
-            </li>
-            <li>
-                <i class="material-icons-round">school</i>
-                <p>${GetProfessionFromID(staff.profession)}</p>
-            </li>
-            <li>
-                <i class="material-icons-round">menu_book</i>
-                <p>${GetSubjectFromID(staff.subject)}</p>
-            </li>
-        </ul>
-        <ol class="rater" id="staff-rater">
-            <li>
-                <label for="rate-1">
-                    <input id="rate-1" type="radio" name="rating" value="1">
-                    <i class="material-icons-round">star</i>
-                </label>
-            </li>
-            <li>
-                <label for="rate-2">
-                    <input id="rate-2" type="radio" name="rating" value="2">
-                    <i class="material-icons-round">star</i>
-                </label>
-            </li>
-            <li>
-                <label for="rate-3">
-                    <input id="rate-3" type="radio" name="rating" value="3">
-                    <i class="material-icons-round">star</i>
-                </label>
-            </li>
-            <li>
-                <label for="rate-4">
-                    <input id="rate-4" type="radio" name="rating" value="4">
-                    <i class="material-icons-round">star</i>
-                </label>
-            </li>
-            <li>
-                <label for="rate-5">
-                    <input id="rate-5" type="radio" name="rating" value="5">
-                    <i class="material-icons-round">star</i>
-                </label>
-            </li>
-        </ol>
-        <label class="field" for="review-field">
-            <p>Leave a little review (Optional)</p>
-            <input type"field" id="review-field" name="rating">
-        </label>
-        <button id="post-review" class="primary">Review</button>
-    `
-    const PostReview = document.getElementById("post-review");
-    PostReview.addEventListener('click', () => {
-        closeStaffPage();
-    });
-
-    for(let i = 1; i <= 5; i++){
-        const rateBtn = document.getElementById(`rate-${i}`);
-        const rateValue = Number(rateBtn.getAttribute("Value"));
-        const rateLabel = rateBtn.parentElement
-        rateBtn.addEventListener('click', () => {
-            for(let j = 1; j <= 5; j++){
-                const otherRateBtn = document.getElementById(`rate-${j}`);
-                const otherRateValue = Number(otherRateBtn.getAttribute("Value"));
-                const otherRateLabel = otherRateBtn.parentElement
-                if(otherRateValue <= rateValue){
-                    otherRateLabel.querySelector("i").style.color = "var(--star)";
-                }
-                else{
-                    otherRateLabel.querySelector("i").style.color = "var(--shade)";
-                }
-            }
-        });
-    };
-};
-
-/* -----------------> CHECK FUNCTIONS <----------------- */
-
 /* -----------------> GET FUNCTIONS <----------------- */
 
 function GetProfessionFromID(id){
@@ -141,10 +51,109 @@ function GetSubjectFromID(id){
     else if(id == 6){
         return "Biology"
     }
+    else if(id == 7){
+        return "Computer"
+    }
     else{
         return "No Subject"
     }
 }
+
+function getRank(sortedStaffs, staff, startIndex, index){
+    const actualRank = isSearching ? 
+            sortedStaffs.findIndex(s => s === staff) + 1 : 
+            startIndex + index + 1;
+    return actualRank
+};
+
+/* -----------------> OPEN / STAFF PAGE <----------------- */
+
+function closeStaffPage(){
+    staffPage.close();
+}
+
+function openStaffPage(staff, rank){
+    staffPage.showModal()
+    staffPageContent.innerHTML = `
+    <h1 class="rank">#${rank}</h1>
+    <img class="avatar" src="${staff.avatar || "./assets/images/none.png"}" alt="Avatar">
+    <h1 class="name">${staff.name.legal}</h1>
+    <ul class="status">
+        <li>
+            <p> ${staff.rating} </p>
+            <i class="material-icons-round">star</i>
+        </li>
+        <li>
+            <i class="material-icons-round">school</i>
+            <p>${GetProfessionFromID(staff.profession)}</p>
+        </li>
+        <li>
+            <i class="material-icons-round">menu_book</i>
+            <p>${GetSubjectFromID(staff.subject)}</p>
+        </li>
+    </ul>
+    <ol class="rater" id="staff-rater">
+        <li>
+            <label for="rate-1">
+                <input id="rate-1" type="radio" name="rating" value="1">
+                <i class="material-icons-round">star</i>
+            </label>
+        </li>
+        <li>
+            <label for="rate-2">
+                <input id="rate-2" type="radio" name="rating" value="2">
+                <i class="material-icons-round">star</i>
+            </label>
+        </li>
+        <li>
+            <label for="rate-3">
+                <input id="rate-3" type="radio" name="rating" value="3">
+                <i class="material-icons-round">star</i>
+            </label>
+        </li>
+        <li>
+            <label for="rate-4">
+                <input id="rate-4" type="radio" name="rating" value="4">
+                <i class="material-icons-round">star</i>
+            </label>
+        </li>
+        <li>
+            <label for="rate-5">
+                <input id="rate-5" type="radio" name="rating" value="5">
+                <i class="material-icons-round">star</i>
+            </label>
+        </li>
+    </ol>
+    <label class="field" for="review-field">
+        <p>Leave a little review (Optional)</p>
+        <input type"field" id="review-field" name="rating">
+    </label>
+    <button id="post-review" class="primary">Review</button>
+    `
+    const PostReview = document.getElementById("post-review");
+    PostReview.addEventListener('click', () => {
+        closeStaffPage();
+    });
+
+    for(let i = 1; i <= 5; i++){
+        const rateBtn = document.getElementById(`rate-${i}`);
+        const rateValue = Number(rateBtn.getAttribute("Value"));
+        const rateLabel = rateBtn.parentElement
+        rateBtn.addEventListener('click', () => {
+            for(let j = 1; j <= 5; j++){
+                const otherRateBtn = document.getElementById(`rate-${j}`);
+                const otherRateValue = Number(otherRateBtn.getAttribute("Value"));
+                const otherRateLabel = otherRateBtn.parentElement
+                if(otherRateValue <= rateValue){
+                    otherRateLabel.querySelector("i").style.color = "var(--star)";
+                }
+                else{
+                    otherRateLabel.querySelector("i").style.color = "var(--shade)";
+                }
+            }
+        });
+    };
+};
 
 /* -----------------> INITILIZE <----------------- */
 
@@ -165,6 +174,7 @@ function updateTopThree() {
     for (let i = 0; i < 3; i++) {
         if (sortedStaffs[i]) {
             const item = top3Items[i];
+            const rankElement = item.querySelector(".rank");
             const nameElement = item.querySelector(".name");
             const ratingElement = item.querySelector(".rating");
             const avatarElement = item.querySelector(".avatar");
@@ -172,14 +182,15 @@ function updateTopThree() {
             nameElement.textContent = `${sortedStaffs[i].name.legal}`;
             
             const ratingText = ratingElement.childNodes[0];
+            
             const starIcon = ratingElement.querySelector(".material-icons-round");
             ratingText.textContent = sortedStaffs[i].rating;
             
             avatarElement.src = sortedStaffs[i].avatar || "./assets/images/none.png";
 
             item.addEventListener('click', () => {
-                openStaffPage(sortedStaffs[i]);
-            })
+                openStaffPage(sortedStaffs[i], Number(rankElement.textContent[1]));
+            });
         }
     }
 }
@@ -188,13 +199,10 @@ function updateTopThree() {
 
 function updatePlusFourList(staffArray) {
     Plus4List.innerHTML = "";
-    
     const startIndex = isSearching ? 0 : 3;
     
     staffArray.slice(startIndex).forEach((staff, index) => {
-        const actualRank = isSearching ? 
-            sortedStaffs.findIndex(s => s === staff) + 1 : 
-            startIndex + index + 1;
+        const actualRank = getRank(sortedStaffs, staff,startIndex , index);
             
         const ProfileElement = document.createElement("li");
         ProfileElement.innerHTML = `
@@ -224,7 +232,7 @@ function updatePlusFourList(staffArray) {
         ProfileElement.id = `staff-${staff.name.nick}`
         Plus4List.append(ProfileElement);
         ProfileElement.addEventListener('click', () => {
-            openStaffPage(staff);
+            openStaffPage(staff, actualRank);
         })
     });
 }
