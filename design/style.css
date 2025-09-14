@@ -102,5 +102,10 @@ hr{
     }
 
 }
-
-
+#alertbox{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: linear-gradient(to right, var(--eaccent), var(--error));
+    padding: 0.5em;
+}
